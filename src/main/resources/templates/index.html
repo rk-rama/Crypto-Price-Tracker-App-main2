@@ -2,108 +2,235 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Crypto Tracker & Alerts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Tracker | Premium Dashboard</title>
 
-    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            --dark-bg: #0f172a;
+        }
+
         body {
-            background: #f5f6fa;
-            font-family: 'Segoe UI', sans-serif;
-            animation: fadeIn 0.7s ease-in-out;
+            background-color: var(--dark-bg);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 40%);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #f8fafc;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
         }
-        @keyframes fadeIn {
-            from {opacity: 0; transform: translateY(20px);}
-            to {opacity: 1; transform: translateY(0);}
+
+        /* Navbar Styling */
+        .navbar {
+            background: rgba(15, 23, 42, 0.8) !important;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1rem 0;
         }
-        .navbar-brand img {
-            width: 38px;
-            margin-right: 8px;
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
         }
-        .card-custom {
-            border-radius: 20px;
-            border: none;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
+
+        .brand-logo-container {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 5px;
         }
-        .card-custom:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 26px rgba(0,0,0,0.12);
+
+        .navbar-brand span {
+            font-weight: 800;
+            font-size: 1.6rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .btn-custom {
-            border-radius: 10px;
-            padding: 12px;
-            font-size: 17px;
+
+        .nav-link {
+            color: #94a3b8 !important;
             font-weight: 600;
+            margin-left: 20px;
             transition: 0.3s;
         }
-        .btn-custom:hover {
-            transform: scale(1.03);
+
+        .nav-link:hover {
+            color: #fff !important;
         }
+
+        /* Main Card Styling */
+        .main-container {
+            height: calc(100vh - 100px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-custom {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 45px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            color: #1e293b;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .icon-header {
+            width: 70px;
+            height: 70px;
+            background: #f1f5f9;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            color: #6366f1;
+        }
+
         h2 {
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+
+        .form-label {
             font-weight: 700;
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .form-control-lg {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 16px;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .form-control-lg:focus {
+            background: #fff;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .btn-custom {
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 16px;
+            padding: 16px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-top: 15px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px -5px rgba(99, 102, 241, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .trending-chips {
+            margin-top: 25px;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            background: #f1f5f9;
+            padding: 5px 12px;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #64748b;
         }
     </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-light bg-white shadow-sm py-3">
-    <div class="container d-flex align-items-center">
-
-        <a class="navbar-brand d-flex align-items-center" href="/">
-            <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="logo">
-            <span class="fw-bold fs-4">CryptoTracker</span>
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <div class="brand-logo-container">
+                <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png"
+                     alt="logo"
+                     style="width: 28px; height: 28px; object-fit: contain;"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <i class="fa-solid fa-coins fs-4 text-warning" style="display:none;"></i>
+            </div>
+            <span>CryptoTracker</span>
         </a>
 
-        <ul class="nav">
-            <li class="nav-item">
-                <a class="nav-link fw-semibold" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link fw-semibold" href="#">Market</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link fw-semibold" href="#">Alerts</a>
-            </li>
-        </ul>
+        <div class="ms-auto d-none d-md-flex">
+            <a class="nav-link" href="/">Home</a>
+            <a class="nav-link" href="#">Market</a>
+            <a class="nav-link" href="#">Alerts</a>
+        </div>
     </div>
 </nav>
 
-<!-- MAIN CONTENT -->
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-
-            <div class="card card-custom p-4">
-                <h2 class="text-center mb-4">
-                    <i class="fa-solid fa-chart-line"></i> Crypto Tracker & Price Alerts
-                </h2>
-
-                <form action="/track" method="post">
-                    <label class="mb-2 fw-bold">Enter Crypto Coins</label>
-
-                    <input type="text"
-                           name="coins"
-                           class="form-control form-control-lg"
-                           placeholder="Example: bitcoin, ethereum, solana"
-                           required>
-
-                    <button type="submit" class="btn btn-primary btn-custom w-100 mt-3">
-                        Track Prices <i class="fa-solid fa-arrow-right ms-2"></i>
-                    </button>
-                </form>
-
+<div class="container main-container">
+    <div class="card card-custom">
+        <div class="text-center">
+            <div class="icon-header">
+                <i class="fa-solid fa-chart-line fa-2x"></i>
             </div>
+            <h2>Smart Tracker</h2>
+            <p class="text-muted mb-4">Track real-time prices and set alerts.</p>
+        </div>
+
+        <form action="/track" method="post">
+            <div class="mb-4">
+                <label class="form-label text-uppercase">Assets to Track</label>
+                <input type="text"
+                       name="coins"
+                       class="form-control form-control-lg"
+                       placeholder="e.g. bitcoin, solana, cardano"
+                       required>
+            </div>
+
+            <button type="submit" class="btn btn-custom w-100">
+                Track Live Prices <i class="fa-solid fa-bolt-lightning ms-2"></i>
+            </button>
+        </form>
+
+        <div class="trending-chips">
+            <span class="chip">#bitcoin</span>
+            <span class="chip">#ethereum</span>
+            <span class="chip">#solana</span>
         </div>
     </div>
 </div>
-
 
 </body>
 </html>
